@@ -26,7 +26,6 @@ export const TodoCard = (props: Todo) => {
       })
     );
   }
-  console.log(props);
   async function handleDelete() {
     dispatch(setCurrentAction("delete"));
     dispatch(setCurrentTodoId(props.id));

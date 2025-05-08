@@ -124,6 +124,9 @@ const todoSlice = createSlice({
       .addCase(rCreateTodo.pending, (state) => {
         state.todoStatus = "loading";
       })
+      .addCase(rCreateTodo.rejected, (state) => {
+        state.todoStatus = "failed";
+      })
       .addCase(rUpdateTodo.fulfilled, (state, action) => {
         const updatedTodoIndexInTodo = state.todos.findIndex(
           (todo) => todo.id === action.payload.id
@@ -148,6 +151,9 @@ const todoSlice = createSlice({
       })
       .addCase(rUpdateTodo.pending, (state) => {
         state.todoStatus = "loading";
+      })
+      .addCase(rUpdateTodo.rejected, (state) => {
+        state.todoStatus = "failed";
       })
       .addCase(rDeleteTodo.fulfilled, (state, action) => {
         if (!action.payload) return;
@@ -174,6 +180,9 @@ const todoSlice = createSlice({
       })
       .addCase(rDeleteTodo.pending, (state) => {
         state.todoStatus = "loading";
+      })
+      .addCase(rDeleteTodo.rejected, (state) => {
+        state.todoStatus = "failed";
       });
   },
 });
