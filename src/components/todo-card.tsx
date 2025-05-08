@@ -26,6 +26,7 @@ export const TodoCard = (props: Todo) => {
       })
     );
   }
+  console.log(props);
   async function handleDelete() {
     dispatch(setCurrentAction("delete"));
     dispatch(setCurrentTodoId(props.id));
@@ -47,6 +48,7 @@ export const TodoCard = (props: Todo) => {
           checked={props.completed}
           onCheckedChange={handleChange}
           disabled={isUpdating}
+          className="cursor-pointer"
         />
       </CardTitle>
       <CardContent className="flex justify-end p-0">

@@ -125,12 +125,23 @@ const todoSlice = createSlice({
         state.todoStatus = "loading";
       })
       .addCase(rUpdateTodo.fulfilled, (state, action) => {
-        console.log("here");
-        const updatedTodoIndex = state.todos.findIndex(
+        const updatedTodoIndexInTodo = state.todos.findIndex(
           (todo) => todo.id === action.payload.id
         );
-        if (updatedTodoIndex !== -1) {
-          state.todos[updatedTodoIndex].completed = action.payload.completed;
+        if (updatedTodoIndexInTodo !== -1) {
+          state.todos[updatedTodoIndexInTodo].completed =
+            action.payload.completed;
+        }
+        switch (state.filter) {
+          case "all":
+            state.filteredTodos = state.todos;
+            break;
+          case "completed":
+            state.filteredTodos = state.todos.filter((todo) => todo.completed);
+            break;
+          case "pending":
+            state.filteredTodos = state.todos.filter((todo) => !todo.completed);
+            break;
         }
         state.initialLoading = false;
         state.todoStatus = "success";
@@ -140,11 +151,23 @@ const todoSlice = createSlice({
       })
       .addCase(rDeleteTodo.fulfilled, (state, action) => {
         if (!action.payload) return;
-        const deletedTodoIndex = state.todos.findIndex(
+        const deletedTodoIndexInTodo = state.todos.findIndex(
           (todo) => todo.id === action.payload
         );
-        if (deletedTodoIndex !== -1) {
-          state.todos.splice(deletedTodoIndex);
+        console.log({ deletedTodoIndexInTodo });
+        if (deletedTodoIndexInTodo !== -1) {
+          state.todos.splice(deletedTodoIndexInTodo, 1);
+        }
+        switch (state.filter) {
+          case "all":
+            state.filteredTodos = state.todos;
+            break;
+          case "completed":
+            state.filteredTodos = state.todos.filter((todo) => todo.completed);
+            break;
+          case "pending":
+            state.filteredTodos = state.todos.filter((todo) => !todo.completed);
+            break;
         }
         state.initialLoading = false;
         state.todoStatus = "success";

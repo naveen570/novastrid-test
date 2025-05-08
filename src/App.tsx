@@ -5,7 +5,7 @@ import { TodoContainer } from "./components/todo-container";
 
 function App() {
   return (
-    <main className="min-h-screen relative">
+    <main className="min-h-screen relative container">
       <header className="sticky top-0 z-10 p-5 bg-white">
         <AddTodoForm />
         <Filter />
