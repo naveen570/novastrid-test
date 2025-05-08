@@ -37,7 +37,8 @@ export const rFetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
 });
 export const rCreateTodo = createAsyncThunk.withTypes<{ state: RootState }>()(
   "todos/createTodo",
-  async (title: string, { getState }) => {
+  async (title: string, { getState, dispatch }) => {
+    dispatch(setCurrentAction("create"));
     const todoListLength = getState().todos.todos.length;
     return await createTodo({
       completed: false,
@@ -49,13 +50,20 @@ export const rCreateTodo = createAsyncThunk.withTypes<{ state: RootState }>()(
 );
 export const rUpdateTodo = createAsyncThunk(
   "todos/updateTodo",
-  async ({ todoId, todoStatus }: { todoId: number; todoStatus: boolean }) => {
+  async (
+    { todoId, todoStatus }: { todoId: number; todoStatus: boolean },
+    { dispatch }
+  ) => {
+    dispatch(setCurrentAction("update"));
+    dispatch(setCurrentTodoId(todoId));
     return await updateTodo(todoId, todoStatus);
   }
 );
 export const rDeleteTodo = createAsyncThunk(
   "todos/deleteTodo",
-  async (todoId: number) => {
+  async (todoId: number, { dispatch }) => {
+    dispatch(setCurrentAction("delete"));
+    dispatch(setCurrentTodoId(todoId));
     const status = await deleteTodo(todoId);
     if (status) {
       return todoId;

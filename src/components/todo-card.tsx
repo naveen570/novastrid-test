@@ -1,10 +1,4 @@
-import {
-  rDeleteTodo,
-  rUpdateTodo,
-  setCurrentAction,
-  setCurrentTodoId,
-  type Todo,
-} from "@/store/todo-slice";
+import { rDeleteTodo, rUpdateTodo, type Todo } from "@/store/todo-slice";
 import { Card, CardContent, CardTitle } from "./ui/card";
 import { Switch } from "./ui/switch";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
@@ -17,8 +11,6 @@ export const TodoCard = (props: Todo) => {
   const currentAction = useAppSelector((state) => state.todos.currentAction);
   const currentTodoId = useAppSelector((state) => state.todos.currentTodoId);
   async function handleChange(checked: boolean) {
-    dispatch(setCurrentAction("update"));
-    dispatch(setCurrentTodoId(props.id));
     await dispatch(
       rUpdateTodo({
         todoId: props.id,
@@ -27,8 +19,6 @@ export const TodoCard = (props: Todo) => {
     );
   }
   async function handleDelete() {
-    dispatch(setCurrentAction("delete"));
-    dispatch(setCurrentTodoId(props.id));
     await dispatch(rDeleteTodo(props.id));
   }
   const isDeleting =
